@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "923472155617",
+    "firebase_url": "https://p128yigityilmaz-default-rtdb.firebaseio.com",
+    "project_id": "p128yigityilmaz",
+    "storage_bucket": "p128yigityilmaz.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:923472155617:android:00decc72479e5cfceb78a0",
+        "android_client_info": {
+          "package_name": "com.p128yigityilmaz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "923472155617-k4outlks98sce4qghvrfcr4ta1ua7qn2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0obLu5Pm4zdO3JoAvkV4_0dYopF-UhoQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "923472155617-k4outlks98sce4qghvrfcr4ta1ua7qn2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
