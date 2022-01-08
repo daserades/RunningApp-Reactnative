@@ -17,7 +17,7 @@ export default StyleSheet.create(
         data: {
             flex: 1,
             //backgroundColor: '#505050',
-            marginLeft:40,
+            alignItems:'center',
             justifyContent:'center',
           
         },

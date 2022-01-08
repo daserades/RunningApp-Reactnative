@@ -1,14 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button } from 'react-native';
+import React, { useContext } from 'react';
 import database from '@react-native-firebase/database';
 
 
 
-export default function HandleData(userMeters, userSpeed, userTime) {
+export default function HandleData(userMeters, userSpeed, userTime, id) {
 
-    const user='gülce'
-    const newReference = database().ref(`users/${user}/activities`)
-   
+
+    const newReference = database().ref(`users/${id}/activities`)
+
     newReference
         .push({
             meter: userMeters,

@@ -7,9 +7,13 @@ import Button from '../../../components/Button/Button'
 import styles from './NewActivity.styles'
 import Distance from '../../../functions/Distance'
 import HandleData from '../../../functions/HandleData';
+import { UserContext } from '../../../context/UserProvider';
+
+
 //import SendActivity from '../../../functions/SendActivity';
 
 export default function NewActivity() {
+    const { state } = useContext(UserContext)
 
     const [currentLongitude, setCurrentLongitude] = useState(36.9)
     const [currentLatitude, setCurrentLatitude] = useState(30.7)
@@ -19,6 +23,8 @@ export default function NewActivity() {
     const [speed, setSpeed] = useState(0)
     const [hasStarted, setHasStarted] = useState(false)
     const timerRef = useRef(null);
+
+
 
     useEffect(() => {
         setSpeed((meters / time).toFixed(2))
@@ -36,7 +42,6 @@ export default function NewActivity() {
             { enableHighAccuracy: true, timeout: 10000, maximumAge: 1000 }
         );
 
-
     }, [handleUserLocationChange])
 
 
@@ -52,7 +57,8 @@ export default function NewActivity() {
 
     function handleActivityStop() {
         timerRef.current.stop();
-        HandleData(meters,speed,time)
+        console.log('userId -'+state.userId)
+        HandleData(meters, speed, time, state.userId)
         setHasStarted(false)
     }
 
@@ -77,29 +83,10 @@ export default function NewActivity() {
 
     }
 
-    function getDistanceFromLatLonInKm(lat1, lon1, lat2, lon2) {
-        var R = 6371; // Radius of the earth in km
-        var dLat = deg2rad(lat2 - lat1);  // deg2rad below
-        var dLon = deg2rad(lon2 - lon1);
-        var a =
-            Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2)
-            ;
-        var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-        var d = R * c * 1000; // Distance in km *1000
-        var d = Math.floor(d);
-        return d;
-    }
-
-    function deg2rad(deg) {
-        return deg * (Math.PI / 180)
-    }
-
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <MapView style={{ flex: 1 }}
+            <MapView style={{ flex: 2 }}
                 region={{
                     latitude: currentLatitude,
                     longitude: currentLongitude,
@@ -119,17 +106,14 @@ export default function NewActivity() {
             </MapView>
             <View style={styles.dataContainer}>
                 <View style={styles.data}>
-                    <Text style={styles.Text}>METER  {meters}</Text>
-                    <Text style={styles.Text}>SPEED   {speed} m/s</Text>
+                    <Text style={styles.Text}>DISTANCE(m)  {meters} </Text>
+                    <Text style={styles.Text}>SPEED(m/s)   {speed} </Text>
                     <View style={styles.timerContainer}>
-                        <Text style={styles.Text}>TIMER   </Text>
+                        <Text style={styles.Text}>TIMER(s)   </Text>
                         <Timer ref={timerRef}
                             onTimes={e => { setTime(e) }}
                         />
                     </View>
-                </View>
-                <View style={{ flex: 1 }}>
-
                 </View>
             </View>
             <View style={styles.buttonContainer}>

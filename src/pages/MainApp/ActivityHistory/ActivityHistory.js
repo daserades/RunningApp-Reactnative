@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { View, Text, Button } from 'react-native';
+import React, { useState, useEffect ,useContext} from 'react';
+import { View, Text } from 'react-native';
 import database from '@react-native-firebase/database';
-import { useIsFocused } from "@react-navigation/native";
-import { FlatList } from 'react-native-gesture-handler';
 import ActivityHistoryCard from '../../../components/ActivityHistoryCard';
+import { UserContext } from '../../../context/UserProvider';
 
 
 export default function ActivityHistory() {
-  const IsFocused = useIsFocused();
   const [userActivities, setUserActivities] = useState([])
-
+  const { state } = useContext(UserContext)
 
   useEffect(() => {
     listenActivityChanges()
@@ -17,9 +15,9 @@ export default function ActivityHistory() {
 
 
   function listenActivityChanges() {
-    const user = 'gülce'
+    
     database()
-      .ref(`users/${user}/activities`)
+      .ref(`users/${state.userId}/activities`)
       .on('value', snapshot => {
         const activity = snapshot.val();
         if (!!activity) {
@@ -28,7 +26,6 @@ export default function ActivityHistory() {
             ...activity[k]
           })
           ))
-
         }
       })
 
@@ -45,7 +42,7 @@ export default function ActivityHistory() {
       {!!userActivities.length ?
         (userActivities.map(b => (
           <ActivityHistoryCard activ={b} key={b.id} />
-        ))) : <Text style={{textAlign:'center'}}>There is nothing to see</Text>}
+        ))) : <Text style={{ textAlign: 'center' }}>There is nothing to see</Text>}
     </View>
   )
 }
