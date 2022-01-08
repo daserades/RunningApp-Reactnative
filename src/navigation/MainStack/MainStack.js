@@ -15,15 +15,29 @@ export default function FavoriteStack() {
             <Tab.Screen
                 name={routes.ACTIVITY_HISTORY}
                 component={ActivityHistory}
+                options={{
+                    headerTitle:'Activity History',
+                    headerTitleAlign:'center'
+                }}
 
             />
             <Tab.Screen
                 name={routes.NEW_ACTIVITY}
                 component={NewActivity}
+                options={{
+                    headerTitle:'Activity',
+                    headerTitleAlign:'center'
+                }}
+
             />
             <Tab.Screen
                 name={routes.LEADERBOARD}
                 component={Leaderboard}
+                options={{
+                    headerTitle:'Leaderboard',
+                    headerTitleAlign:'center'
+                }}
+
             />
         </Tab.Navigator>
     );

@@ -26,16 +26,28 @@ export default function Navigation() {
                     <Stack.Screen
                         name={routes.MAIN_STACK}
                         component={MainStack}
+                        options={{
+                            headerShown: false,
+                            
+                        }}
                     />
                 ) : (
                     <>
                         <Stack.Screen
                             name={routes.SIGN_IN_PAGE}
                             component={SignIn}
+                            options={{
+                                headerTitle: 'SIGN IN',
+                                headerTitleAlign:'center'
+                            }}
                         />
                         <Stack.Screen
                             name={routes.SIGN_UP_PAGE}
                             component={SignUp}
+                            options={{
+                                headerTitle: 'SIGN UP',
+                                headerTitleAlign:'center'
+                            }}
                         />
                     </>)}
             </Stack.Navigator>

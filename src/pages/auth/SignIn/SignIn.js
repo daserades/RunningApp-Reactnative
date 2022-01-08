@@ -15,6 +15,7 @@ export default function SignIn() {
   }
 
   function handleSignIn(signData) {
+    
     try {
       auth().signInWithEmailAndPassword(signData.email, signData.password);
       Alert.alert('RUN', 'Signed In');
