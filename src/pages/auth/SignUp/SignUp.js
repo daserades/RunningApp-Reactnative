@@ -26,31 +26,52 @@ export default function SignUp() {
       .then(() => console.log('Data set.'));
   }
 
+  const goBack = () => {
+    if (navigation.canGoBack) {
+      navigation.goBack()
+    }
+  }
+
   function handleSignUp(signData) {
     try {
-      auth().createUserWithEmailAndPassword(signData.email, signData.password);
+      auth().createUserWithEmailAndPassword(signData.email, signData.password).catch(error => {
+        switch (error.code) {
+          case 'auth/email-already-in-use':
+            Alert.alert('RUN',`Email address ${signData.email} already in use.`)
+            break;
+          case 'auth/invalid-email':
+            Alert.alert('RUN',`Email address ${signData.email} is invalid.`);
+            break;
+          case 'auth/operation-not-allowed':
+            Alert.alert('RUN',`Error during sign up.`);
+            break;
+          case 'auth/weak-password':
+            Alert.alert('RUN','Password is not strong enough. Add additional characters including special characters and numbers.');
+            break;
+          default:
+            console.log(error.message);
+            break;
+        }
+      })
+
       
-      const id=signData.email.replace(/[^a-zA-Z0-9]+/g, "");
-      console.log('user ID -- '+ id)
+
+      const id = signData.email.replace(/[^a-zA-Z0-9]+/g, "");
+      console.log('user ID -- ' + id)
 
       dispatch({ type: 'SET_EMAIL', payload: { userEmail: signData.email } })
       dispatch({ type: 'SET_PASSWORD', payload: { userPassword: signData.password } })
       dispatch({ type: 'SET_NAME', payload: { userEmail: signData.name } })
       dispatch({ type: 'SET_SURNAME', payload: { userSurname: signData.surname } })
-      dispatch({ type: 'SET_USERID', payload: { userId: id }})
+      dispatch({ type: 'SET_USERID', payload: { userId: id } })
 
       uploadUserDetails(signData.email, signData.password, signData.userName, signData.userSurname, id)
-      Alert.alert(
-        'RUN',
-        'User created. Now you can sign in with your address',
-      );
-      navigation.navigate(routes.SIGN_IN_PAGE)
+
     } catch (error) {
       console.log(error);
       Alert.alert('RUN', 'An error occurred');
     }
   }
 
-
-  return <SignUpLayout onSignUp={handleSignUp} />;
+  return <SignUpLayout onSignUp={handleSignUp} onGoBack={goBack} />;
 }

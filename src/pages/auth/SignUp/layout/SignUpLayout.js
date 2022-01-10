@@ -1,3 +1,4 @@
+import { NavigationContainer } from '@react-navigation/native';
 import React, { useState } from 'react';
 import { Alert, SafeAreaView, Text } from 'react-native';
 
@@ -7,6 +8,7 @@ import Input from '../../../../components/Input';
 import styles from './SignUpLayout.styles';
 
 export default function SignIn({ onSignUp, onGoBack }) {
+
   const [signData, setSignData] = useState({
     email: '',
     userName: '',
@@ -16,13 +18,19 @@ export default function SignIn({ onSignUp, onGoBack }) {
   });
 
   function handleSignUp() {
+    const val = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w\w+)+$/;   //e-mail Validation
+    console.log('email valid ? ' + val.test(signData.email))  
     if (signData.password !== signData.repassword) {
       Alert.alert('RUN', 'Passwords are not matched');
       return;
+    } else if (val.test(signData.email) === false) {
+      Alert.alert('RUN', 'Invalid Email');
+      return;
     }
-
     onSignUp(signData);
   }
+
+  
 
   return (
     <SafeAreaView>
@@ -32,7 +40,7 @@ export default function SignIn({ onSignUp, onGoBack }) {
         onChangeText={email => setSignData({ ...signData, email })}
       />
       <Input
-        label="Name"       
+        label="Name"
         onChangeText={userName => setSignData({ ...signData, userName })}
       />
       <Input
