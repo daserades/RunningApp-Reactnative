@@ -21,6 +21,10 @@ export default (state, action) => {
             const id=action.payload.userId
             return { ...state, userId: id};
         }
+        case 'SET_HASSESSION': {
+            const hasSession=action.payload.hasSession
+            return { ...state, hasSession: hasSession};
+        }
         {/* case 'SET_FAVORITE_HEROES': {
             return { ...state, favoriteHeroes: action.payload, loading: false };
         }

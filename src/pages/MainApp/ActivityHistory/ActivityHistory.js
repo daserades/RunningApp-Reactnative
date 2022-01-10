@@ -3,7 +3,7 @@ import { View, Text } from 'react-native';
 import database from '@react-native-firebase/database';
 import ActivityHistoryCard from '../../../components/ActivityHistoryCard';
 import { UserContext } from '../../../context/UserProvider';
-
+import HandleBestSpeedData from '../../../functions/HandleBestSpeedData'
 
 export default function ActivityHistory() {
   const [userActivities, setUserActivities] = useState([])
@@ -25,6 +25,7 @@ export default function ActivityHistory() {
             ...activity[k]
           }))
           let SpeedArray = ActivityArray.map(item => [item.speed])
+          HandleBestSpeedData(Math.max.apply(Math, SpeedArray), state.userId)
           setBestSpeed(Math.max.apply(Math, SpeedArray))
           setUserActivities(ActivityArray)
         }
@@ -32,16 +33,17 @@ export default function ActivityHistory() {
   }
 
 
+
   return (
-    <View>
-      <View>
-        <Text>{bestSpeed}</Text>
-      </View>
+    <View style={{flex:1}}>
 
       {!!userActivities.length ?
         (userActivities.map(b => (
           <ActivityHistoryCard activ={b} key={b.id} />
-        ))) : <Text style={{ textAlign: 'center' }}>There is nothing to see</Text>}
+        ))) : <View style={{flex:1, justifyContent: 'center',}}>
+          <Text style={{ textAlign: 'center' }}>There is nothing to see.</Text>
+          <Text style={{ textAlign: 'center' }}>Better get to work...</Text>
+        </View>}
     </View>
   )
 }

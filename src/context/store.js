@@ -1,7 +1,8 @@
 export default {
-    userEmail:'',
-    userName:'',
-    userSurname:'',
-    userPassword:'',
-    userId:'',
+    userEmail: '',
+    userName: '',
+    userSurname: '',
+    userPassword: '',
+    userId: '',
+    hasSession: null,
 }

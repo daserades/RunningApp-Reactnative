@@ -8,12 +8,13 @@ import styles from './NewActivity.styles'
 import Distance from '../../../functions/Distance'
 import HandleData from '../../../functions/HandleData';
 import { UserContext } from '../../../context/UserProvider';
+import auth from '@react-native-firebase/auth'
 
 
 //import SendActivity from '../../../functions/SendActivity';
 
 export default function NewActivity() {
-    const { state } = useContext(UserContext)
+    const { state, dispatch } = useContext(UserContext)
 
     const [currentLongitude, setCurrentLongitude] = useState(36.9)
     const [currentLatitude, setCurrentLatitude] = useState(30.7)
@@ -24,6 +25,11 @@ export default function NewActivity() {
     const [hasStarted, setHasStarted] = useState(false)
     const timerRef = useRef(null);
 
+    useEffect(() => {
+        let userId = auth().currentUser.email.replace(/[^a-zA-Z0-9]+/g, "");
+        dispatch({ type: 'SET_USERID', payload: { userId: userId } })
+        
+    }, [])
 
 
     useEffect(() => {
@@ -41,7 +47,6 @@ export default function NewActivity() {
             error => Alert.alert(error.message),
             { enableHighAccuracy: true, timeout: 10000, maximumAge: 1000 }
         );
-
     }, [handleUserLocationChange])
 
 
@@ -57,7 +62,6 @@ export default function NewActivity() {
 
     function handleActivityStop() {
         timerRef.current.stop();
-        console.log('userId -'+state.userId)
         HandleData(meters, speed, time, state.userId)
         setHasStarted(false)
     }
@@ -86,7 +90,7 @@ export default function NewActivity() {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
-            <MapView style={{ flex: 2 }}
+            <MapView style={{ flex: 3 , borderRadius:10}}
                 region={{
                     latitude: currentLatitude,
                     longitude: currentLongitude,

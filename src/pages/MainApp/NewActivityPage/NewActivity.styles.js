@@ -7,12 +7,12 @@ export default StyleSheet.create(
             position: 'absolute',
             alignSelf: 'center',
             bottom: 10,
-
         },
 
         dataContainer: {
             flex: 1,
-            flexDirection: 'row'
+            flexDirection: 'row',
+            marginBottom:25
         },
         data: {
             flex: 1,

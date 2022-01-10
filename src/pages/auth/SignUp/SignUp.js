@@ -55,7 +55,6 @@ export default function SignUp() {
       })
 
       
-
       const id = signData.email.replace(/[^a-zA-Z0-9]+/g, "");
       console.log('user ID -- ' + id)
 
