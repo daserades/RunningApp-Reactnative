@@ -31,10 +31,10 @@ export default function Leaderboard() {
 
                     var bySpeed = BestSpeedArray.slice(0);
                     bySpeed.sort(function (a, b) {
-                        return a.born - b.born;
+                        return a.speed - b.speed;
                     });
 
-                    setBestSpeedsArray(bySpeed)
+                    setBestSpeedsArray(bySpeed.reverse())
                 }
             })
     }
